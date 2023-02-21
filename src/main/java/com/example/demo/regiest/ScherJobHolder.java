@@ -1,16 +1,16 @@
 
 package com.example.demo.regiest;
 
-import java.lang.reflect.InvocationTargetException;
-
+import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.quartz.*;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
-import com.google.common.base.Preconditions;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author 傲寒
@@ -44,7 +44,7 @@ public class ScherJobHolder implements ApplicationContextAware, Job {
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
         ScherJobHolder.applicationContext = applicationContext;
     }
 
