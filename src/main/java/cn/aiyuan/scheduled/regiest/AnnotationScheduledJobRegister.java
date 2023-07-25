@@ -1,5 +1,8 @@
-package com.example.demo.regiest;
+package cn.aiyuan.scheduled.regiest;
 
+import cn.aiyuan.scheduled.annotation.Scheduled;
+import cn.aiyuan.scheduled.model.JobTarget;
+import cn.aiyuan.scheduled.utils.ScheduledUtils;
 import com.google.common.base.Preconditions;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +24,7 @@ import java.util.Map;
 
 /**
  * @author 傲寒
- * @date 2023/02/17
+ * @since 2023/02/17
  */
 @Component
 public class AnnotationScheduledJobRegister implements BeanPostProcessor, ApplicationContextAware, Ordered {
@@ -46,10 +49,10 @@ public class AnnotationScheduledJobRegister implements BeanPostProcessor, Applic
         for (Method md : methods) {
             if (md.isAnnotationPresent(Scheduled.class)) {
                 Scheduled scheduled = md.getAnnotation(Scheduled.class);
-                String jobName = ScherUtils.extractJobName(md);
+                String jobName = ScheduledUtils.extractJobName(md);
                 JobTarget jobTarget = processJobTarget(beanName, md, scheduled.jobDataRef());
                 createJob(jobName, schedulerName, scheduled.cron(), scheduled.durability(), scheduled.recoverable(), jobTarget);
-                logger.info("############Register a scher of job by annotation, DESC:{}|{}", scheduled, md + "#################");
+                logger.info("############ Register a scheduler of job by annotation, desc:{}|{}", scheduled, md + "#################");
             }
         }
 
@@ -64,12 +67,13 @@ public class AnnotationScheduledJobRegister implements BeanPostProcessor, Applic
         JobDetail jobDetail = JobBuilder.newJob(ScherConstant.DEFAULT_JOB_CLASS)
                 .withIdentity(jobName, groupName)
                 .requestRecovery(jobRecover)
-                .storeDurably(jobDurability).build();
+                .storeDurably(jobDurability)
+                .build();
+        setJobDataMap(jobDetail, jobTarget);
         Trigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity(jobName, groupName)
                 .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression))
                 .build();
-        setJobDataMap(jobDetail, jobTarget);
         try {
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {

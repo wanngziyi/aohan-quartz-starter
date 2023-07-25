@@ -1,4 +1,4 @@
-package com.example.demo.regiest;
+package cn.aiyuan.scheduled.annotation;
 
 import java.lang.annotation.*;
 

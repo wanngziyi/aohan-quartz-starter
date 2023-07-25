@@ -1,5 +1,5 @@
 
-package com.example.demo.regiest;
+package cn.aiyuan.scheduled.utils;
 
 
 import com.google.common.base.Preconditions;
@@ -12,16 +12,12 @@ import java.util.Map;
 
 /**
  * @author 傲寒
- * @date 2023/02/17
+ * @since  2023/02/17
  */
-public class ScherUtils {
+public class ScheduledUtils {
 
     public static String extractJobName(Method md) {
         return md.getDeclaringClass().getName() + "#" + md.getName();
-    }
-
-    public static String extractJobName(ScherJobBean scherJobBeanFactory, String beanName) {
-        return scherJobBeanFactory.getTargetObject() + "#" + scherJobBeanFactory.getTargetMethod() + "#" + beanName;
     }
 
     public static void checkMethodMatchable(Object targetObject, String targetMethodName, Map<String, Object> parameters) {
