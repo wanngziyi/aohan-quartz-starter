@@ -83,9 +83,10 @@ public class AnnotationScheduledJobRegister implements BeanPostProcessor, Applic
 
 
     private void setJobDataMap(JobDetail jobDetail, JobTarget jobTarget) {
-        jobTarget.getMethodParameters().put(ScherConstant.TARGET_BEAN_NAME, jobTarget.getTargetBeanName());
-        jobTarget.getMethodParameters().put(ScherConstant.TARGET_METHOD_NAME, jobTarget.getTargetMethodName());
-        jobDetail.getJobDataMap().putAll(jobTarget.getMethodParameters());
+        final Map<String, Object> methodParameters = jobTarget.getMethodParameters();
+        methodParameters.put(ScherConstant.TARGET_BEAN_NAME, jobTarget.getTargetBeanName());
+        methodParameters.put(ScherConstant.TARGET_METHOD_NAME, jobTarget.getTargetMethodName());
+        jobDetail.getJobDataMap().putAll(methodParameters);
     }
 
 
