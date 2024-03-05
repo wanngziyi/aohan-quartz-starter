@@ -30,11 +30,13 @@ public class ScherJobHolder implements ApplicationContextAware, Job {
         Preconditions.checkArgument(dataMap != null, "dataMap can not be null.");
         String targetBeanName = (String) dataMap.remove(ScherConstant.TARGET_BEAN_NAME);
         String targetMethodName = (String) dataMap.remove(ScherConstant.TARGET_METHOD_NAME);
-        Preconditions.checkArgument(targetBeanName != null && targetMethodName != null,
-                "targetBeanName or targetMethodName can not be null.");
+        Preconditions.checkArgument(
+                targetBeanName != null && targetMethodName != null,
+                "targetBeanName or targetMethodName can not be null."
+        );
         Object targetObject = applicationContext.getBean(targetBeanName);
         try {
-            if (Objects.nonNull(dataMap.getWrappedMap())) {
+            if (Objects.nonNull(dataMap.remove(ScherConstant.TARGET_METHOD_PARAM_NAME))) {
                 MethodUtils.invokeMethod(targetObject, targetMethodName, dataMap.getWrappedMap());
             } else {
                 MethodUtils.invokeMethod(targetObject, targetMethodName);

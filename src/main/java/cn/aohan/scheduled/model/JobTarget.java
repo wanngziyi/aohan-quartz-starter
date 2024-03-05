@@ -1,7 +1,5 @@
 package cn.aohan.scheduled.model;
 
-import com.google.common.collect.Maps;
-
 import java.util.Map;
 
 
@@ -17,20 +15,12 @@ public class JobTarget {
 
     private String targetMethodName;
 
-    private Map<String, Object> methodParameters = Maps.newHashMap();
+    private Map<String, Object> methodParameters;
 
     private JobTarget() {
-        super();
-    }
-
-    private JobTarget(String targetBeanName, String targetMethodName) {
-        super();
-        this.targetBeanName = targetBeanName;
-        this.targetMethodName = targetMethodName;
     }
 
     private JobTarget(String targetBeanName, String targetMethodName, Map<String, Object> methodParameters) {
-        super();
         this.targetBeanName = targetBeanName;
         this.targetMethodName = targetMethodName;
         this.methodParameters = methodParameters;
@@ -61,7 +51,7 @@ public class JobTarget {
     }
 
     public static JobTarget of(String targetBeanName, String targetMethodName) {
-        return new JobTarget(targetBeanName, targetMethodName);
+        return new JobTarget(targetBeanName, targetMethodName, null);
     }
 
     public static JobTarget of(String targetBeanName, String targetMethodName, Map<String, Object> methodParameters) {

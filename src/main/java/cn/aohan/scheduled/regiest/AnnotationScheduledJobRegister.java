@@ -15,10 +15,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.Ordered;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -26,7 +26,6 @@ import java.util.Map;
  * @author 傲寒
  * @since 2023/02/17
  */
-@Component
 public class AnnotationScheduledJobRegister implements BeanPostProcessor, ApplicationContextAware, Ordered {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -83,10 +82,11 @@ public class AnnotationScheduledJobRegister implements BeanPostProcessor, Applic
 
 
     private void setJobDataMap(JobDetail jobDetail, JobTarget jobTarget) {
-        final Map<String, Object> methodParameters = jobTarget.getMethodParameters();
-        methodParameters.put(ScherConstant.TARGET_BEAN_NAME, jobTarget.getTargetBeanName());
-        methodParameters.put(ScherConstant.TARGET_METHOD_NAME, jobTarget.getTargetMethodName());
-        jobDetail.getJobDataMap().putAll(methodParameters);
+        final Map<String, Object> jobDataMap = new HashMap<>(4);
+        jobDataMap.put(ScherConstant.TARGET_BEAN_NAME, jobTarget.getTargetBeanName());
+        jobDataMap.put(ScherConstant.TARGET_METHOD_NAME, jobTarget.getTargetMethodName());
+        jobDataMap.put(ScherConstant.TARGET_METHOD_PARAM_NAME, jobTarget.getMethodParameters());
+        jobDetail.getJobDataMap().putAll(jobDataMap);
     }
 
 
