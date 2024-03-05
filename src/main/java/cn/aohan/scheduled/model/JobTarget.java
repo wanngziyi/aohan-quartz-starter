@@ -1,4 +1,4 @@
-package cn.aiyuan.scheduled.model;
+package cn.aohan.scheduled.model;
 
 import com.google.common.collect.Maps;
 

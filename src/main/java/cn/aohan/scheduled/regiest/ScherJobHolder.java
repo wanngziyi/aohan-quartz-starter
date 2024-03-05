@@ -1,5 +1,5 @@
 
-package cn.aiyuan.scheduled.regiest;
+package cn.aohan.scheduled.regiest;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.reflect.MethodUtils;

@@ -1,4 +1,4 @@
-package cn.aiyuan.scheduled.regiest;
+package cn.aohan.scheduled.regiest;
 
 import org.quartz.Job;
 

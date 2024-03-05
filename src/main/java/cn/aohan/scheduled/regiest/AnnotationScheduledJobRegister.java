@@ -1,8 +1,8 @@
-package cn.aiyuan.scheduled.regiest;
+package cn.aohan.scheduled.regiest;
 
-import cn.aiyuan.scheduled.annotation.Scheduled;
-import cn.aiyuan.scheduled.model.JobTarget;
-import cn.aiyuan.scheduled.utils.ScheduledUtils;
+import cn.aohan.scheduled.annotation.Scheduled;
+import cn.aohan.scheduled.model.JobTarget;
+import cn.aohan.scheduled.utils.ScheduledUtils;
 import com.google.common.base.Preconditions;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
